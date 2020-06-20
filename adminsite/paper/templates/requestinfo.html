@@ -1,0 +1,22 @@
+{% extends 'useruploads.html' %}
+
+{% block content %}
+ {% for ele in  reinfo %}
+   <div class="container">
+     <div class="row">
+       <div class="col-2">{{ele.rid}}</div>
+       <div class="col-2">{{ele.requestno}}</div>
+       <div class="col-6">{{ele.img}}</div>
+       <div class="col-2">{{ele.more}}</div>
+     </div>
+   </div>
+ {% endfor%}
+ <br><br>
+
+ <form action="{% url 'paper:sendrequestinfo' %}" method="post">
+   {% csrf_token %}
+   <input type="text" name="rid" placeholder="enter rid">
+   <input type="submit" name="requestno" value="{{reinfo.0.requestno}}" class="btn btn-outline-success">
+ </form>
+
+{% endblock content %}

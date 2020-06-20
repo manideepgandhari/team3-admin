@@ -30,65 +30,18 @@
   <title>Upload Page</title>
 </head>
 <body>
-  <div class="container-fluid">
-    <div class="container con">
-    <div class="row justify-content-between">
-      <div class="col md-4 col1">
-        <h1>Upload Exam Paper</h1>
-        <form accept-charset="UTF-8" action="{% url 'paper:uploadpaper' %}" method="POST">
-          {% csrf_token %}
-          <div class="form-group">
-            <label for="semid">Sem No.</label>
-            <input type="text" name="semid" class="form-control" id="semid" placeholder="Enter sem id" required="required">
-          </div>
-          <div class="form-group">
-            <label for="deptid" required="required">Dept No.</label>
-            <input type="text" name="deptid" class="form-control" id="deptid" placeholder="Enter dept id" required="required">
-          </div>
-          <hr>
-          <div class="form-group mt-3">
-            <label class="mr-2">Upload your File:</label>
-            <input type="file" name="file">
-          </div>
-          <hr>
-          <button type="submit" class="btn btn-outline-primary">Submit</button>
-        </form>
-      </div>
+  <h3>upload</h3>
+  <form method="post" enctype="multipart/form-data" action="{% url 'paper:uploadpaper' %}">
+    {% csrf_token %}
+    <input type="text" name="username" placeholder="username">
+    <input type="file" name="file">
+    <button type="submit">upload file</button>
+  </form>
 
-      <div class="col md-4 col3">
-        <h1>Upload Timetable</h1>
-        <form accept-charset="UTF-8" action="{% url 'paper:timetable' %}" method="POST">
-          {% csrf_token %}
-          <div class="form-group">
-            <label for="semid">Sem No.</label>
-            <input type="text" name="semid" class="form-control" id="semid" placeholder="Enter sem id" required="required">
-          </div>
-          <div class="form-group">
-            <label for="deptid" required="required">Dept No.</label>
-            <input type="text" name="deptid" class="form-control" id="deptid" placeholder="Enter dept id" required="required">
-          </div>
-          <hr>
-          <div class="form-group mt-3">
-            <label class="mr-2">Upload your File:</label>
-            <input type="file" name="file">
-          </div>
-          <hr>
-          <button type="submit" class="btn btn-outline-primary">Submit</button>
-        </form>
-      </div>
-    </div>
-    <br><br><br><br>
-    <div class="row">
-      <div class="col-12 text-center">
-        <form action="{% url 'paper:check_user_upload' %}">
-          {% csrf_token %}
-          <input type="submit" value="Check" name="Check" class="btn btn-outline-primary"><strong>Check for User Uploads</strong></input>
-        </form>
-      </div>
-    </div>
-
-  </div>
-</div>
+  <form action="{% url 'paper:check_user_upload' %}">
+    {% csrf_token %}
+    <input type="submit" name="Check" class="btn btn-outline-primary">Check user uploads
+  </form>
 
 
 </body>
