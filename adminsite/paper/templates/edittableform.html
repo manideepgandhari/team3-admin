@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" >
+  <style>
+    body{
+      background-color: lightcyan;
+    }
+
+    div {
+
+    padding: 25px 50px 75px;
+    background-color:lightcyan;
+    }
+
+ </style>
+
+</head>
+<body>
+  <div class="container text-center">
+  {% if message %}<h4 class="text-center">{{message}}</h4>{% endif %}
+  <br>
+    <font face = "Bedrock" size = "3">
+     <h2> TIME-TABLE UPLOAD</h2>
+  <form method="post" action="{% url 'paper:timetable' %}">
+
+    {% csrf_token %}
+      branch_name:<br>
+      <select name="branch_name" id="branch_name">
+      <option value="CSE">CSE</option>
+      <option value="IT">IT</option>
+      <option value="MECH">MECH</option>
+      <option value="PROD">PROD</option>
+      <option value="CHEMICAL">CHEMICAL</option>
+      <option value="BIOTECH">BIOTECH</option>
+      <option value="EEE">ECE</option>
+      <option value="ECE">EEE</option>
+     <option value="CIVIL">CIVIL</option>
+    </select>
+
+     <br>
+     subject_name:<br>
+      <input type="text" name="subject_name">
+    <br>
+     subject_code:<br>
+      <input type="number" name="s_code">
+      <br>
+    exam_type:<br>
+      <select name="exam_type" id="exam_type">
+      <option value="internal">Internal</option>
+      <option value="external">External</option>
+    </select>
+      <br>
+    sub_type:<br>
+      <select name="sub_type" id="sub_type">
+      <option value="mid1">Mid-1</option>
+      <option value="Mid2">Mid-2</option>
+      <option value="Main">Main</option>
+      <option value="Backlog">Backlog</option>
+    </select>
+      <br>
+    start_at:<br>
+      <input type="time" name="start_time">
+      <br>
+    end_at:<br>
+      <input type="time" name="end_at">
+      <br>
+    date:<br>
+      <input type="date" name="date">
+      <br>
+    year:<br>
+      <input type="number" name="d_id">
+      <br>
+    sem_no:<br>
+     <select name="sem_no" id="sem_no">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+    </select>
+    <br>
+
+    <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" value="Submit">
+
+    </form>
+
+</div>
+</body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.js" ></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.7/js/tether.min.js" ></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+</html>

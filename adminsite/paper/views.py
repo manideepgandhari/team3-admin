@@ -5,40 +5,71 @@ from django.http import HttpResponse,Http404,HttpResponseRedirect
 import requests
 from django.core.files.storage import FileSystemStorage
 import json
+import base64
+from django.conf import settings
+import os
 # Create your views here.
 
-def home(request):
-
-    return render(request,'home.html')
 def login(request):
 
     return render(request,'login.html')
-def accept(request):
+def home(request):
     #this api expects empname and pass to send accesstoken
     #context=requests.post("https://coscmyfirstapitest.herokuapp.com/login",data=request.POST)
     #this context is the access token returned by the api
     #context=context.json()
     #if context.response_code==200:
-    return render(request,'uploadpage.html')
+    return render(request,'home.html')
     #else:
     #    content={"message":"invalid credentials"}
     #    return render(request,'login.html',content)
+
+def adminpaperpage(request):
+    return render(request,'paperuploadform.html')
+def admintimetablepage(request):
+    return render(request,'ttuploadform.html')
+def edittimetablepage(request):
+    return render(request,'edittableform.html')
+
+
 def uploadpaper(request):
     if request.method== 'POST':
         data=request.FILES['file']
-        other=request.POST.get('username')
         fs=FileSystemStorage()
         name=fs.save(data.name,data)
-        url=fs.url(name)
-    return HttpResponse(other)
+        basedir=settings.MEDIA_ROOT
+        path=os.path.join(basedir,name)
+        with open(path,'rb') as img:
+            image=base64.b64encode(img.read())
+        info=request.POST
+        img={"image":image}
+
+        #r=requests.post("apiurl",data=info,img=img)
+        #if(r.status_code==200):
+        return render(request,'paperuploadform.html',{"message":"Uploaded image successfully"})
+        #else:
+        #    return render(request,'paperuploadform.html',{"message":"cannot upload something happened"})
+
 
 def timetable(request):
     data=request.POST
-    return HttpResponse(data)
+    #r=requests.post("apiurl",data=data)
+    #if r.status_code==200:
+    return render(request,'ttuploadform.html',{"message":"uploaded timetable successfully"})
+    #else:
+    #    return render(request,'ttuploadform.html',{"message":"uplod failed something happened"})
+def edittable(request):
+    data=request.POST
+    #r=requests.post("apiurl",data=data)
+    #if r.status_code==200:
+    return render(request,'edittableform.html',{"message":"edited successfully"})
+    #else:
+    #return render(request,'edittableform.html',{"message":"edit not successfull"})
+
 
 def check_user_upload(request):
-    #context=requests.get("url")
-    #context=context.json()
+    #r=requests.get("url")
+    #ans=r.json()
     global ans
     ans=[
     {
