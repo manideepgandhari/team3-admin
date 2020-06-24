@@ -1,16 +1,16 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <html lang="en">
 <head>
+  <body style="background-image:url('{% static "images/flypapers.jpg" %}')" no-repeat center fixed;background-size: cover;></body>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" >
   <style>
-    body{
-        background-color: lightcyan;
-    }
+    
     form{
        text-align:center
     }
@@ -19,32 +19,34 @@
     padding: 12px 20px;
     margin: 8px 0;
     }
-
-    div {
-    background-color:cornsilk;
-
-    width:500px;
-    margin: auto;
-    border: 1px solid rgba(38, 0, 255, 0);
-
+    body{
+      color:bisque;
+      
+      
+       background-repeat: no-repeat;
+       background-size:cover;
+    
+    
     }
+
+    
 
   </style>
   <title> User Upload Page</title>
 </head>
-<body>
+<body >
   <br>
   <br>
   <br>
  <div> <h3 class="text-center">AVAILABLE REQUEST NUMBERS </h3></div>
   <br>
   <br>
-  <br>
-  <br>
+  
+  
   <div>
   <form action="{% url 'paper:getrequestnoinfo' %}" method="post">
     {% csrf_token %}
-    Request id:<br>
+    Request Id:<br>
 
     <select name="requestno" id="requestno">
 
@@ -55,9 +57,9 @@
 
     </select>
     <br>
-    <br>
-    <br>
-    <input type="submit" name="submit" class="btn btn-success">
+    
+    
+    <input type="submit" name="SUBMIT" class="btn btn-outline-secondary">
   </form>
 </div>
 

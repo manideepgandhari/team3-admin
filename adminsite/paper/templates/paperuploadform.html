@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <html lang="en">
@@ -10,18 +11,19 @@
   <style>
     body{
       background-color: lightcyan;
+      color:white;
     }
 
-    div {
+     div {
 
     padding: 25px 50px 75px;
-    background-color:lightcyan;
+    #background-color:lightcyan;
     }
 
  </style>
 
 </head>
-<body>
+<body style="background-image:url('{% static "images/bookpile.jpg" %}')" no-repeat center fixed;background-size: cover;> 
   <div class="container text-center">
   {% if message %}<h4 class="text-center">{{message}}</h4>{% endif %}
 

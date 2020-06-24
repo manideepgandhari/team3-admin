@@ -11,12 +11,12 @@
      </div>
    </div>
  {% endfor%}
- <br><br>
+ <br><br><br><br><br><br>
 
  <form action="{% url 'paper:sendrequestinfo' %}" method="post">
    {% csrf_token %}
    <input type="text" name="rid" placeholder="enter rid">
-   <input type="submit" name="requestno" value="{{reinfo.0.requestno}}" class="btn btn-outline-success">
+   <input type="submit" name="requestno" value="{{reinfo.0.requestno}}" class="btn btn-outline-secondary">
  </form>
 
 {% endblock content %}
