@@ -26,10 +26,12 @@
   {% if msg %}<h4 class="text-center">{{msg.message}}</h4>{% endif %}
   <br>
     <font face = "Bedrock" size = "3">
-     <h2 class="text-center">Enter the Table Details You Want To Change</h2>
-  <form method="post" action="{% url 'paper:edittable' %}">
-
+     <h2>Enter the New Timetable</h2>
+  <form method="post" action="{% url 'paper:sendedittable' %}">
     {% csrf_token %}
+
+    <input type="hidden" name="request_no" value="{{requestno}}">
+
       branch_name:<br>
       <select name="b_id" id="branch_name">
       <option value="4">CSE</option>

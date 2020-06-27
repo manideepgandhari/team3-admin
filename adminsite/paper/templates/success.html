@@ -11,7 +11,7 @@
 </head>
 <body>
   <div class="container text-center">
-  <h3 class="text-center">Modified successfully</h3>
+  <h3 class="text-center">{{message}}</h3>
   <form action="{% url 'paper:check_user_upload' %}">
     {% csrf_token %}
     <input type="submit" name="Check" class="btn btn-warning">Go Back To Useruploads Page

@@ -46,11 +46,11 @@
     {% csrf_token %}
     Request id:<br>
 
-    <select name="requestno" id="requestno">
+    <select name="request_no" id="requestno">
 
     {% for element in msg %}
 
-    <option value="{{element.empno}}" >"{{element.empno}}"</option>
+    <option value="{{element.request_no}}" >"{{element.request_no}}"</option>
     {% endfor %}
 
     </select>
