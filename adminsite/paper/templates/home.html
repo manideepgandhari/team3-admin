@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <html lang="en">
@@ -7,6 +8,34 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" >
+  <body style="background-image:url('{% static "images/bookimg.jpg" %}')" no-repeat center fixed;background-size: cover;>
+
+  <style>
+    .btn btn-outline-secondary{
+        color: #111 ;
+      }
+    body{
+        color: white;
+
+
+         background-repeat: no-repeat;
+         background-size:cover;
+      }
+    form{
+      text-align:center;
+      }
+    input[type=submit] {
+      padding:15px 20px;
+      width: 40%;
+      border: 2px solid white;
+      font-size:20px;
+      cursor:pointer;
+      border-radius: 25px;
+      }
+    .btn btn-outline-secondary-text {
+        color:bisque;
+      }
+  </style>
 
   <title> User Upload Page</title>
 </head>

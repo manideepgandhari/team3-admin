@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <html lang="en">
@@ -7,15 +8,17 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" >
+  <body style="background-image:url('{% static "images/bookimg.jpg" %}')" no-repeat center fixed;background-size: cover;>
   <style>
     body{
-      background-color: lightcyan;
+      color: #E7FAFA;
+      background-repeat: no-repeat;
+      background-size:cover;
     }
 
     div {
 
     padding: 25px 50px 75px;
-    background-color:lightcyan;
     }
 
  </style>
@@ -59,8 +62,8 @@
       <br>
     sub_type:<br>
       <select name="subtype" id="sub_type">
-      <option value="Mid1">Mid-1</option>
-      <option value="Mid2">Mid-2</option>
+      <option value="MID 1">Mid-1</option>
+      <option value="MID 2">Mid-2</option>
       <option value="Main">Main</option>
       <option value="Backlog">Backlog</option>
     </select>

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <html lang="en">
@@ -7,21 +8,24 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" >
+
   <style>
     body{
-      background-color: lightcyan;
+      background-repeat: no-repeat;
+      background-size:cover;
+      color: #E7FAFA;
     }
 
     div {
 
     padding: 25px 50px 75px;
-    background-color:lightcyan;
+
     }
 
  </style>
 
 </head>
-<body>
+<body style="background-image:url('{% static "images/bookpile.jpg" %}')" no-repeat center fixed;background-size: cover;>
   <div class="container text-center">
   {% if msg %}<h4 class="text-center">{{msg.message}}</h4>{% endif %}
 
@@ -58,8 +62,8 @@
 
   sub_type:<br>
   <select name="subtype" id="subtype">
-  <option value="Mid1">Mid-1</option>
-  <option value="Mid2">Mid-2</option>
+  <option value="MID 1">Mid-1</option>
+  <option value="MID 2">Mid-2</option>
   <option value="Main">Main</option>
   <option value="Backlog">Backlog</option>
   </select>
