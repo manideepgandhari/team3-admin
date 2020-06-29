@@ -108,8 +108,6 @@ def edittable(request):
         header={"Authorization":accesstoken}
         r=requests.get("http://cbit-qp-api.herokuapp.com/admin-get-timetable",params=data,headers=header)
         r=r.json()
-        #context={"subject":sub,"requestno":r}
-        #return render(request,'dummy.html',context)
         try:
             if("message" in r):
                 context={"subject":sub,"msg":r}
@@ -202,7 +200,7 @@ def sendrequestinfo(request):
         return redirect('paper:check_user_upload')
 def redirectimage(request):
     data=request.POST
-    return render(request,'imageview.html',data)
+    return render(request,'imageview.html',{"image":data['image']})
 ## For both Python 2.7 and Python 3.x
 #import base64
 #with open("imageToSave.png", "wb") as fh:

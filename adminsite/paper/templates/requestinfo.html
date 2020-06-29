@@ -6,7 +6,7 @@
      <div class="row align-items-center">
        <div class="col-3"><p>rid:</p>{{ele.r_id}}</div>
        <div class="col-3"><p>requestno:</p>{{ele.request_no}}</div>
-       <div class="col">
+       <div class="col-6">
          <form action="{% url 'paper:redirectimage' %}" method="post">
            {% csrf_token %}
            <input type="hidden" name="image" value="{{ele.image}}">
