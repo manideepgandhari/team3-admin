@@ -108,7 +108,8 @@ def edittable(request):
         header={"Authorization":accesstoken}
         r=requests.get("http://cbit-qp-api.herokuapp.com/admin-get-timetable",params=data,headers=header)
         r=r.json()
-        #return HttpResponse(r)
+        #context={"subject":sub,"requestno":r}
+        #return render(request,'dummy.html',context)
         try:
             if("message" in r):
                 context={"subject":sub,"msg":r}
@@ -145,6 +146,21 @@ def sendedittable(request):
             return render(request,'edit.html')
     except:
         return redirect('paper:edittable')
+
+def deletetimetable(request):
+    try:
+        if request.method=='POST':
+            data=request.POST
+            global accesstoken
+            header={"Authorization":accesstoken}
+            r=requests.post("http://cbit-qp-api.herokuapp.com/admin-timetable-delete",data=data,headers=header)
+            r=r.json()
+            global sub
+            context={"msg":r,"subject":sub}
+            return render(request,'edit.html',context)
+    except:
+        return redirect('paper:edittable')
+
 
 def check_user_upload(request):
     try:

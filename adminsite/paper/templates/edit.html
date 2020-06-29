@@ -21,7 +21,7 @@
       color: black;
       background-repeat: no-repeat;
       background-size:cover;
-      padding: 25px 50px 75px;
+      padding: 25px 50px 25px;
     }
 
  </style>
@@ -30,7 +30,9 @@
 <body>
   <div class="container text-center">
   {% if msg %}<h4 class="text-center">{{msg.message}}</h4>{% endif %}
+  <div class="row">
 
+  <div class="col-6">
   <br>
     <font face = "Bedrock" size = "3">
      <h2>Enter the New Timetable</h2>
@@ -97,13 +99,22 @@
       <option value="8">8</option>
     </select>
     <br>
-  {% for r in requestno %}
-    <input type="hidden" name="request_no" value="{{r.request_no}}">{{r.request_no}}
-  {% endfor %}
+    <input type="hidden" name="request_no" value="{{requestno.0.request_no}}">{{requestno.0.request_no}}
     <br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" value="Submit">
+    <input type="submit" value="Edit" class="btn btn-success">
+  </form>
+  </div>
 
+  <div class="col-6">
+    <font face="Bedrock" size="3">
+    <h2>Click To Delete Timetable</h2>
+    <form action="{% url 'paper:deletetimetable' %}" method="post" style="padding-top: 50%">
+      {% csrf_token %}
+      <input type="hidden" name="request_no" value="{{requestno.0.request_no}}">{{requestno.0.request_no}}
+      <input type="submit" name="submit" value="Delete" class="btn btn-danger">
     </form>
+  </div>
+  </div>
 
 </div>
 </body>
