@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <html lang="en">
@@ -11,7 +12,9 @@
 
   <style>
     body{
-      background-color: lightcyan;
+      color: #E7FAFA;
+      background-repeat: no-repeat;
+      background-size:cover;
     }
 
     div {
@@ -27,16 +30,15 @@
 <body>
   <div class="container text-center">
   {% if msg %}<h4 class="text-center">{{msg.message}}</h4>{% endif %}
+
   <br>
     <font face = "Bedrock" size = "3">
      <h2>Enter the New Timetable</h2>
   <form method="post" action="{% url 'paper:sendedittable' %}">
     {% csrf_token %}
 
-    <input type="hidden" name="request_no" value="{{requestno.request_no}}">
-
       branch_name:<br>
-      <select name="b_id" id="branch_name">
+      <select name="b_id" id="b_id">
       <option value="4">CSE</option>
       <option value="5">IT</option>
       <option value="2">MECH</option>
@@ -95,7 +97,9 @@
       <option value="8">8</option>
     </select>
     <br>
-
+  {% for r in requestno %}
+    <input type="hidden" name="request_no" value="{{r.request_no}}">{{r.request_no}}
+  {% endfor %}
     <br>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" value="Submit">
 

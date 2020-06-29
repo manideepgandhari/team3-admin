@@ -6,7 +6,12 @@
      <div class="row align-items-center">
        <div class="col-2"><p>rid:</p>{{ele.r_id}}</div>
        <div class="col-2"><p>requestno:</p>{{ele.request_no}}</div>
-       <div class="col-8"><img src="data:image/jpeg;base64,{{ele.image}}" alt="imagr" class="img-fluid"></div>
+       <div class="col-8">
+         <form action="{% url 'paper:redirectimage' %}" method="post">
+           {% csrf_token %}
+           <input type="hidden" name="image" value="{{ele.image}}">
+           <input type="submit" name="submit" value="click here" class="btn btn-link">
+         </form></div>
      </div>
    </div>
  {% endfor%}

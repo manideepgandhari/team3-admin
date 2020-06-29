@@ -15,4 +15,5 @@ path('sendedittable/',views.sendedittable,name="sendedittable"),
 path('check_user_upload/',views.check_user_upload,name='check_user_upload'),
 path('getrequestnoinfo/',views.getrequestnoinfo,name='getrequestnoinfo'),
 path('sendrequestinfo/',views.sendrequestinfo,name='sendrequestinfo'),
+path('redirectimage/',views.redirectimage,name='redirectimage'),
 ]
