@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html>
 <html lang="en">
@@ -8,29 +7,21 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" >
-
-   
-  <body style="background-image:url('{% static "images/flypapers.jpg" %}')" >
-    <style>
-
-body{
-      color: white;
-     
-      
-       background-repeat: no-repeat;
-       background-size:cover;
+  <style>
+    body{
+      background-repeat: no-repeat center center;
+      background-size: 80% 80%;
     }
-    </style>
+    img{
+      width: 80%;
+      height: auto;
+    }
+  </style>
+  <titl>Display Image page</title>
 </head>
 <body>
   <div class="container text-center">
-  <h3 class="text-center">Modified successfully</h3>
-  <br>
-  <form action="{% url 'paper:check_user_upload' %}">
-    {% csrf_token %}<br><br><br>
-
-    <input type="submit" name="Check" class="btn btn-warning"><br>   Go Back To Useruploads Page
-  </form>
+     <img src="data:image/jpeg;base64,{{image}}" alt="imagr" class="img-fluid width-100">
 </div>
 
 </body>

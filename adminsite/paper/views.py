@@ -1,4 +1,4 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpResponse,Http404,HttpResponseRedirect
 #from django.template import loader
 # from django.urls import reverse
@@ -8,139 +8,203 @@ import json
 import base64
 from django.conf import settings
 import os
+#from .models import Store
 # Create your views here.
+
+def getsubjectinfo():
+    global sub
+    r=requests.get("http://cbit-qp-api.herokuapp.com/admin-get-subjects")
+    sub=r.json()
 
 def login(request):
 
     return render(request,'login.html')
 def home(request):
-    #this api expects empname and pass to send accesstoken
-    #context=requests.post("https://coscmyfirstapitest.herokuapp.com/login",data=request.POST)
-    #this context is the access token returned by the api
-    #context=context.json()
-    #if context.response_code==200:
-    return render(request,'home.html')
-    #else:
-    #    content={"message":"invalid credentials"}
-    #    return render(request,'login.html',content)
+    try:
+        #this api expects empname and pass to send accesstoken
+        context=requests.post("http://cbit-qp-api.herokuapp.com/admin-login",data=request.POST)
+        #this context is the access token returned by the api
+        context=context.json()
+        global accesstoken
+        if 'access_token' in context:
+            accesstoken=context['access_token']
+            accesstoken="Bearer"+" "+str(accesstoken)
+            #print(accesstoken)
+            getsubjectinfo()
+            #store=Store.objects.create(access_token=accesstoken)
+            return render(request,'home.html')
+        else:
+            content={"message":"invalid credentials"}
+            return render(request,'login.html',content)
+    except:
+        return redirect('paper:login')
 
 def adminpaperpage(request):
-    return render(request,'paperuploadform.html')
+    global sub
+    context={'subject':sub}
+    return render(request,'paperuploadform.html',context)
 def admintimetablepage(request):
-    return render(request,'ttuploadform.html')
+    global sub
+    context={'subject':sub}
+    return render(request,'ttuploadform.html',context)
 def edittimetablepage(request):
-    return render(request,'edittableform.html')
+    global sub
+    context={'subject':sub}
+    return render(request,'edittableform.html',context)
 
 
 def uploadpaper(request):
-    if request.method== 'POST':
-        data=request.FILES['file']
-        fs=FileSystemStorage()
-        name=fs.save(data.name,data)
-        basedir=settings.MEDIA_ROOT
-        path=os.path.join(basedir,name)
-        with open(path,'rb') as img:
-            image=base64.b64encode(img.read())
-        info=request.POST
-        img={"image":image}
+    try:
+        if request.method== 'POST':
+            data=request.FILES['image']
+            fs=FileSystemStorage()
+            name=fs.save(data.name,data)
+            basedir=settings.MEDIA_ROOT
+            path=os.path.join(basedir,name)
+            with open(path,'rb') as img:
+                image=base64.b64encode(img.read())
+            info=request.POST
+            #for including base64 img in the post data
+            _mutable=info._mutable
+            info._mutable=True
+            info['image']=image
+            info._mutable=_mutable
 
-        #r=requests.post("apiurl",data=info,img=img)
-        #if(r.status_code==200):
-        return render(request,'paperuploadform.html',{"message":"Uploaded image successfully"})
-        #else:
-        #    return render(request,'paperuploadform.html',{"message":"cannot upload something happened"})
-
+            global accesstoken
+            header={"Authorization":accesstoken}
+            r=requests.post("http://cbit-qp-api.herokuapp.com/admin-qpreq",data=info,headers=header)
+            r=r.json()
+            #return HttpResponse(r['message'])
+            global sub
+            context={"msg":r,"subject":sub}
+            #if(r['message']=="Succesfully inserted"):
+            return render(request,'paperuploadform.html',context)
+            #else:
+            #    return render(request,'paperuploadform.html',{"message":"cannot upload something happened"})
+    except:
+        return redirect('paper:home')
 
 def timetable(request):
-    data=request.POST
-    #r=requests.post("apiurl",data=data)
-    #if r.status_code==200:
-    return render(request,'ttuploadform.html',{"message":"uploaded timetable successfully"})
-    #else:
-    #    return render(request,'ttuploadform.html',{"message":"uplod failed something happened"})
+    try:
+        data=request.POST
+        global accesstoken
+        header={"Authorization":accesstoken}
+        #return HttpResponse(data['s_code'])
+        r=requests.post("http://cbit-qp-api.herokuapp.com/admin-timetable-create",data=data,headers=header)
+        r=r.json()
+        #if r.status_code==200:
+        global sub
+        context={"msg":r,"subject":sub}
+        return render(request,'ttuploadform.html',context)
+        #else:
+        #    return render(request,'ttuploadform.html',{"message":"upload failed something happened"})
+    except:
+        return redirect('paper:home')
 def edittable(request):
-    data=request.POST
-    #r=requests.post("apiurl",data=data)
-    #if r.status_code==200:
-    return render(request,'edittableform.html',{"message":"edited successfully"})
-    #else:
-    #return render(request,'edittableform.html',{"message":"edit not successfull"})
+    try:
+        data=request.POST
+        global sub
+        global accesstoken
+        header={"Authorization":accesstoken}
+        r=requests.get("http://cbit-qp-api.herokuapp.com/admin-get-timetable",params=data,headers=header)
+        r=r.json()
+        try:
+            if("message" in r):
+                context={"subject":sub,"msg":r}
+                #r={"requestno":6,"subject":sub}
+                return render(request,'edittableform.html',context)
+            else:
+                context={"subject":sub,"requestno":r}
+                return render(request,'edit.html',context)
+                #return HttpResponse(context['requestno'])
+        except:
+            context={"subject":sub,"requestno":r}
+            #return HttpResponse(context['requestno'])
+            return render(request,'edit.html',context)
+                #return render(request,'edittableform2.html',context)
+                #context={"subject":sub,"msg":r}
+                #return HttpResponse(context['msg'])
+                #return render(request,'edittableform.html',context)
+    except:
+        return redirect('paper:home')
+def sendedittable(request):
+    try:
+        if request.method== 'POST':
+            data=request.POST
+            global accesstoken
+            header={"Authorization":accesstoken}
+            r=requests.post("http://cbit-qp-api.herokuapp.com/admin-timetable-update",data=data,headers=header)
+            r=r.json()
+            #if(r.status_code==200):
+            global sub
+            context={"msg":r,"subject":sub}
+            return render(request,'edit.html',context)
+            #return HttpResponse(data['request_no'])
+        else:
+            return render(request,'edit.html')
+    except:
+        return redirect('paper:edittable')
+
+def deletetimetable(request):
+    try:
+        if request.method=='POST':
+            data=request.POST
+            global accesstoken
+            header={"Authorization":accesstoken}
+            r=requests.post("http://cbit-qp-api.herokuapp.com/admin-timetable-delete",data=data,headers=header)
+            r=r.json()
+            global sub
+            context={"msg":r,"subject":sub}
+            return render(request,'edit.html',context)
+    except:
+        return redirect('paper:edittable')
 
 
 def check_user_upload(request):
-    #r=requests.get("url")
-    #ans=r.json()
-    global ans
-    ans=[
-    {
-        "empno": 7782,
-    },
-    {
-        "empno": 7839
-    },
-    {
-        "empno": 7934
-    },
-    {
-        "empno": 158
-    },
-    {
-        "empno": 7369
-    },
-    {
-        "empno": 7566
-    },
-    {
-        "empno": 7788
-    },
-    {
-        "empno": 7876
-    },
-    {
-        "empno": 7902
-    },
-    {
-        "empno": 1234
-    },
-    {
-        "empno": 7499
-    },
-    {
-        "empno": 7521
-    },
-    {
-        "empno": 7654
-    },
-    {
-        "empno": 7698
-    },
-    {
-        "empno": 7844
-    },
-    {
-        "empno": 7900
-    }
-    ]
-
-    context={"msg":ans}
-    return render(request,'useruploads.html',context)
-def getrequestnoinfo(request):
-    if request.method=='POST':
-        data=request.POST
+    try:
+        global accesstoken
+        header={"Authorization":accesstoken}
+        r=requests.get("http://cbit-qp-api.herokuapp.com/admin-false-select",headers=header)
         global ans
-        data=[{"rid":1,"requestno":7782,"img":"image here","more":"coming soon"}]
-        context={"msg":ans,"reinfo":data}
-        return render(request,'requestinfo.html',context)
+        ans=r.json()
+
+        context={"msg":ans}
+        return render(request,'useruploads.html',context)
+    except:
+        return redirect('paper:home')
+def getrequestnoinfo(request):
+    try:
+        if request.method=='POST':
+            data=request.POST
+            global ans
+            global accesstoken
+            header={"Authorization":accesstoken}
+            r=requests.get("http://cbit-qp-api.herokuapp.com/admin-reqno-details",params=data,headers=header)
+            r=r.json()
+            #data=[{"rid":1,"requestno":7782,"img":"image here","more":"coming soon"}]
+            #r=r.json()
+            context={"msg":ans,"reinfo":r}
+            return render(request,'requestinfo.html',context)
+        else:
+            return redirect('paper:check_user_upload')
+    except:
+        return redirect('paper:check_user_upload')
 def sendrequestinfo(request):
+
     if request.method=='POST':
         data=request.POST
-        #r=requests.post("url",data)
-        #r=r.json()
-        #if r.status_code==200:
-        return render(request,'success.html')
-
+        global accesstoken
+        header={"Authorization":accesstoken}
+        r=requests.post("http://cbit-qp-api.herokuapp.com/admin-delete-req",data=data,headers=header)
+        r=r.json()
+        return redirect('paper:check_user_upload')
+def redirectimage(request):
+    data=request.POST
+    return render(request,'imageview.html',{"image":data['image']})
 ## For both Python 2.7 and Python 3.x
 #import base64
 #with open("imageToSave.png", "wb") as fh:
 #    fh.write(base64.decodebytes(img_data))
 ans=[]
+sub=[]
+accesstoken=""

@@ -3,20 +3,25 @@
 {% block content %}
  {% for ele in  reinfo %}
    <div class="container">
-     <div class="row">
-       <div class="col-2">{{ele.rid}}</div>
-       <div class="col-2">{{ele.requestno}}</div>
-       <div class="col-6">{{ele.img}}</div>
-       <div class="col-2">{{ele.more}}</div>
+     <div class="row align-items-center">
+       <div class="col-3"><p><b>rid:</b></p>{{ele.r_id}}</div>
+       <div class="col-3"><p><b>requestno:</b></p>{{ele.request_no}}</div>
+       <div class="col-6">
+         <form action="{% url 'paper:redirectimage' %}" method="post">
+           {% csrf_token %}
+           <input type="hidden" name="image" value="{{ele.image}}">
+           <input type="submit" name="submit" value="click here" class="btn btn-link">
+         </form></div>
      </div>
    </div>
  {% endfor%}
- <br><br><br><br><br><br>
-
- <form action="{% url 'paper:sendrequestinfo' %}" method="post">
-   {% csrf_token %}
-   <input type="text" name="rid" placeholder="enter rid">
-   <input type="submit" name="requestno" value="{{reinfo.0.requestno}}" class="btn btn-outline-secondary">
- </form>
-
+ <br><br>
+  <div class="container text-center">
+     <form action="{% url 'paper:sendrequestinfo' %}" method="post" class="text-center">
+       {% csrf_token %}
+       <strong><b>rid:</b></strong><input type="text" name="r_id" placeholder="enter rid" required><br>
+       <input type="hidden" name="request_no" value="{{reinfo.0.request_no}}" placeholder="enter the selected request no" required><br>
+       &ensp;  &ensp; <input type="submit" name="submit" value="submit" class="btn btn-success">
+     </form>
+  </div>
 {% endblock content %}
