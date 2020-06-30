@@ -18,35 +18,61 @@
     form{
        text-align:center
     }
+    select {
+        width: 100px;
+        margin: 20px;
+        text-align: center;
+        float:center;
+    }
+
     input {
-    width: 25%;
+    width: 10%;
     padding: 12px 20px;
     margin: 8px 0;
     }
 
-    div {
-    color: #E7FAFA;
-    width: 500px;
+    div.white{
+    color:white;
+    max-width: 600px;
+    height: 20px;
     margin: auto;
 
     }
+
+    div.grey{
+                background-color opacity:0.8;
+                background-color:beige;
+                margin: auto;
+                 width:1070px;
+                 color:black;
+                 opacity: 0.8;
+                 border: 2px solid #9C9C9C;
+       }
+       div.container{
+
+        background-color:beige;
+        opacity: 0.8;
+        width:1070px;
+        color:black;
+        border: 2px solid #9C9C9C;
+       }
+       }
+
 
   </style>
   <title> User Upload Page</title>
 </head>
 <body>
   <br>
+
+ <div class="white"> <h2 class="text-center">AVAILABLE REQUEST NUMBERS </h2></div>
   <br>
   <br>
- <div> <h3 class="text-center">AVAILABLE REQUEST NUMBERS </h3></div>
-  <br>
-  <br>
-  <br>
-  <br>
-  <div>
+
+ <div class ="grey">
   <form action="{% url 'paper:getrequestnoinfo' %}" method="post">
     {% csrf_token %}
-    Request id:<br>
+   <b> User Reqnos:</b><br>
 
     <select name="request_no" id="requestno">
 
@@ -57,11 +83,11 @@
 
     </select>
     <br>
-    <br>
-    <br>
+
     <input type="submit" name="submit" class="btn btn-success">
   </form>
 </div>
+
 
 <br><br><br>
 

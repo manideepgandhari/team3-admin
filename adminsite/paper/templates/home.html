@@ -41,26 +41,27 @@
 </head>
 
 <body>
+  <br><br>
   <form class="form" action="{% url 'paper:adminpaperpage' %}">
     {% csrf_token %}
-    <input type="submit" name="uploadpaper" class="btn btn-info btn-md" value="uploadpaper">
+    <input type="submit" name="uploadpaper" class="btn btn-info btn-md" value="UploadPaper">
   </form>
-
+<br><br>
   <form class="form" action="{% url 'paper:admintimetablepage' %}">
     {% csrf_token %}
-    <input type="submit" name="uploadtimetable" class="btn btn-info btn-md" value="uploadtimetable">
+    <input type="submit" name="uploadtimetable" class="btn btn-info btn-md" value="UploadTimeTable">
   </form>
-
+  <br><br>
   <form class="form" action="{% url 'paper:edittimetablepage' %}">
     {% csrf_token %}
-    <input type="submit" name="edittimetable" class="btn btn-info btn-md" value="edittimetable">
+    <input type="submit" name="edittimetable" class="btn btn-info btn-md" value="EditTimeTable">
   </form>
-
+  <br><br>
   <form class="form" action="{% url 'paper:check_user_upload' %}">
     {% csrf_token %}
-    <input type="submit" name="Check User Uploads" class="btn btn-info btn-md" value="checkuseruploads">
+    <input type="submit" name="Check User Uploads" class="btn btn-info btn-md" value="CheckUserUploads">
   </form>
-
+  <br><br>
 </body>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.js" ></script>

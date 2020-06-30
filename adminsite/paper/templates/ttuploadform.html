@@ -14,27 +14,56 @@
       color: #E7FAFA;
       background-repeat: no-repeat;
       background-size:cover;
+
     }
+
+    select {
+        width: 200px;
+        margin: 20px;
+        text-align: center;
+        float:center;
+    }
+    input{
+         width: 200px;
+          text-align: center;
+          float:center;
+          }
 
     div {
 
     padding: 25px 50px 75px;
     }
 
+
+      div.light{
+
+       background-color: black;
+       height:620px ;
+        opacity: 0.4;
+        width:580px;
+        border: 2px solid #9C9C9C;
+       }
+
+
+
  </style>
 
 </head>
 <body>
   <div class="container text-center">
+
   {% if msg %}<h4 class="text-center">{{msg.message}}</h4>{% endif %}
-  <br>
-    <font face = "Bedrock" size = "3">
-     <h2> TIME-TABLE UPLOAD</h2>
+ <br>
+    <font face = "Bedrock" size = "4">
+     <B><h1>TIME-TABLE UPLOAD</h1> </B><br>
+     <div align = "center">
+      <div class="light" >
+
   <form method="post" action="{% url 'paper:timetable' %}">
 
     {% csrf_token %}
-      branch_name:<br>
-      <select name="b_id" id="branch_name">
+      branch_name:
+      <select name="b_id"  id="branch_name">
       <option value="4">CSE</option>
       <option value="5">IT</option>
       <option value="2">MECH</option>
@@ -45,22 +74,40 @@
       <option value="7">EEE</option>
      <option value="1">CIVIL</option>
     </select>
-
      <br>
-     subject_name:<br>
-      <select name="s_code" id="s_code">
+
+     &ensp;
+     &ensp;
+     &ensp;
+     sem_no:
+
+    <select name="sem_no" id="sem_no">
+     <option value="1">1</option>
+     <option value="2">2</option>
+     <option value="3">3</option>
+     <option value="4">4</option>
+     <option value="5">5</option>
+     <option value="6">6</option>
+     <option value="7">7</option>
+     <option value="8">8</option>
+   </select>
+   <br>
+
+      subject_name:
+      <select name="s_code"  id="s_code">
       {% for s in subject %}
        <option value="{{s.s_code}}">{{s.subject_name}}</option>
       {% endfor %}
       </select>
     <br>
-    exam_type:<br>
+    &ensp;    exam_type   :
       <select name="exam_type" id="exam_type">
       <option value="Internal">Internal</option>
       <option value="External">External</option>
     </select>
       <br>
-    sub_type:<br>
+      &ensp;&ensp;
+      sub_type  :
       <select name="subtype" id="sub_type">
       <option value="MID 1">Mid-1</option>
       <option value="MID 2">Mid-2</option>
@@ -68,37 +115,38 @@
       <option value="Backlog">Backlog</option>
     </select>
       <br>
-    start_at:<br>
-      <input type="time" name="start_at" required>
-      <br>
-    end_at:<br>
+      &ensp;&nbsp;
+      start_at  :
+    &nbsp;&nbsp;
+
+     <input type="time" name="start_at" required>
+      <br><br>
+
+      &nbsp;&ensp;&ensp;&nbsp; end_at:
+      &ensp;
+
       <input type="time" name="end_at" required>
-      <br>
-    date:<br>
+      <br><br>
+      &nbsp; &ensp;&nbsp;&nbsp;
+       date :
+
+      &ensp;&nbsp;
+
       <input type="date" name="date" required>
-      <br>
-    year:<br>
-      <input type="number" name="year" required>
-      <br>
-    sem_no:<br>
-     <select name="sem_no" id="sem_no">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-      <option value="6">6</option>
-      <option value="7">7</option>
-      <option value="8">8</option>
-    </select>
-    <br>
+      <br><br>
 
-    <br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" value="submit">
+      &nbsp; &ensp;&nbsp;&nbsp;
+       year: &ensp;&nbsp;
+       <input type="number" name="year" placeholder="Ex:2020" required>
+      <br><br>
 
+     <input type="submit" value="submit">
+  <br>
     </form>
+      </div>
+    </div>
 
-</div>
+
 </body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.js" ></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.7/js/tether.min.js" ></script>
